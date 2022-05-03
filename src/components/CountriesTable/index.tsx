@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-//import Link from '@mui/material/Link'
+import { Link } from 'react-router-dom'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -47,7 +47,7 @@ export default function CountriesTable({ countries }: CountriesPropType) {
           {countries
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((country) => (
-              <TableRow key={`country-${country.name.common}`}>
+              <TableRow key={`country-${country.id}`}>
                 <TableCell>
                   <Avatar
                     alt={`${country.name.common} flag`}
@@ -55,14 +55,19 @@ export default function CountriesTable({ countries }: CountriesPropType) {
                     variant="square"
                   />
                 </TableCell>
-                <TableCell>{country.name.common}</TableCell>
+                <TableCell>
+                  <Link to={`/country/${country.id}`}>
+                    {country.name.common}
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <List>
-                    {Object.entries(country.languages).map((value) => (
-                      <ListItem key={value[0]}>
-                        <ListItemText primary={value[1]} />
-                      </ListItem>
-                    ))}
+                    {country.languages &&
+                      Object.entries(country.languages).map((value) => (
+                        <ListItem key={value[0]}>
+                          <ListItemText primary={value[1]} />
+                        </ListItem>
+                      ))}
                   </List>
                 </TableCell>
                 <TableCell>{country.population}</TableCell>

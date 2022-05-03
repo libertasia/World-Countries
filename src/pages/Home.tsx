@@ -1,38 +1,51 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Action } from 'redux'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { ThunkDispatch } from 'redux-thunk'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
 
-import { Product, AppState } from '../types'
-import { addProduct, removeProduct } from '../redux/actions'
-
-const names = ['Apple', 'Orange', 'Avocado', 'Banana', 'Cucumber', 'Carrot']
+import CountriesTable from '../components/CountriesTable'
+import StickyFooter from '../components/StickyFooter'
+import { AppState, CountriesState } from '../types'
+import { getCountries } from '../redux/actions'
 
 export default function Home() {
   const dispatch = useDispatch()
-  const products = useSelector((state: AppState) => state.product.inCart)
 
-  const handleAddProduct = () => {
-    const product: Product = {
-      id: (+new Date()).toString(),
-      name: names[Math.floor(Math.random() * names.length)],
-      price: +(Math.random() * 10).toFixed(2),
-    }
-    dispatch(addProduct(product))
-  }
+  const { countries, isLoading, error } = useSelector(
+    (state: AppState) => state.countriesData
+  )
+
+  useEffect(() => {
+    ;(dispatch as ThunkDispatch<CountriesState, void, Action>)(getCountries())
+  }, [])
 
   return (
-    <>
-      <h1>Home page</h1>
-      {products.length <= 0 && <div>No products in cart</div>}
-      <ul>
-        {products.map(p => (
-          <li key={p.id}>
-            <Link to={`/products/${p.id}`}>{`${p.name} - $${p.price}`}</Link>
-            <button onClick={() => dispatch(removeProduct(p))}>Remove</button>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleAddProduct}>Add product</button>
-    </>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+      }}
+    >
+      <CssBaseline />
+      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
+        <Typography variant="h2" component="h1" gutterBottom>
+          Home page
+        </Typography>
+        {/* <Typography variant="h5" component="h2" gutterBottom>
+          {'Pin a footer to the bottom of the viewport.'}
+          {'The footer will move as the main element of the page grows.'}
+        </Typography>
+        <Typography variant="body1">Sticky footer placeholder.</Typography> */}
+        {error && <p>{error}</p>}
+        {isLoading && <p>Loading...</p>}
+        <CountriesTable countries={countries} />
+      </Container>
+      <StickyFooter />
+    </Box>
   )
 }

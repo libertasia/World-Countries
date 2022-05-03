@@ -12,10 +12,10 @@ export default function ui(
   case TOGGLE_DIALOG: {
     return {
       ...state,
-      dialogOpen: {
-        ...state.dialogOpen,
-        [action.payload.dialog]: !state.dialogOpen[action.payload.dialog],
-      },
+      // dialogOpen: {
+      //   ...state.dialogOpen,
+      //   [action.payload.dialog]: !state.dialogOpen[action.payload.dialog],
+      // },
     }
   }
 
