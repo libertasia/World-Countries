@@ -27,7 +27,7 @@ export default function Country() {
       <CssBaseline />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
         <Typography variant="h2" component="h1" gutterBottom>
-          Country {country?.name.common} page
+          {country?.name.common}
         </Typography>
       </Container>
       <StickyFooter />
