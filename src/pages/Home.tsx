@@ -2,15 +2,19 @@ import React, { useEffect } from 'react'
 import { Action } from 'redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from 'redux-thunk'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 
+import AppHeader from '../components/AppHeader'
 import CountriesTable from '../components/CountriesTable'
 import StickyFooter from '../components/StickyFooter'
 import { AppState, CountriesState } from '../types'
 import { getCountries } from '../redux/actions'
+
+const mdTheme = createTheme()
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -26,28 +30,37 @@ export default function Home() {
   }, [dispatch, isDataLoaded])
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-      }}
-    >
-      <CssBaseline />
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
-        <Typography variant="h2" component="h1" gutterBottom>
-          Home page
-        </Typography>
-        {/* <Typography variant="h5" component="h2" gutterBottom>
-          {'Pin a footer to the bottom of the viewport.'}
-          {'The footer will move as the main element of the page grows.'}
-        </Typography>
-        <Typography variant="body1">Sticky footer placeholder.</Typography> */}
-        {error && <p>{error}</p>}
-        {isLoading && <p>Loading...</p>}
-        <CountriesTable countries={countries} />
-      </Container>
-      <StickyFooter />
-    </Box>
+    <ThemeProvider theme={mdTheme}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppHeader />
+          <Container
+            component="main"
+            maxWidth="lg"
+            sx={{
+              mt: 8,
+              mb: 2,
+              flexGrow: 1,
+              overflow: 'auto',
+            }}
+          >
+            <Typography variant="h2" component="h1" gutterBottom>
+              Home page
+            </Typography>
+            {error && <p>{error}</p>}
+            {isLoading && <p>Loading...</p>}
+            <CountriesTable countries={countries} />
+          </Container>
+        </Box>
+        <StickyFooter />
+      </Box>
+    </ThemeProvider>
   )
 }
