@@ -58,3 +58,19 @@ export type AppState = {
   countriesData: CountriesState
   // ui: UiState,
 }
+
+// Other Types
+export type OrderType = 'asc' | 'desc'
+
+export type TableHeaderPropType = {
+  onRequestSort: (
+    event: React.MouseEvent<unknown>,
+    property: keyof CountryType
+  ) => void
+  order: OrderType
+  orderBy: string
+}
+
+export type TableRowItemPropType = {
+  country: CountryType
+}

@@ -1,23 +1,28 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
 import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
-import Avatar from '@mui/material/Avatar'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import Button from '@mui/material/Button'
 
-import { CountriesPropType } from '../../types'
+import TableHeader from '../TableHeader'
+import TableRowItem from '../TableRowItem'
+import { CountriesPropType, CountryType, OrderType } from '../../types'
+import { stableSort, getComparator } from '../../helpers'
 
 export default function CountriesTable({ countries }: CountriesPropType) {
+  const [order, setOrder] = React.useState<OrderType>('asc')
+  const [orderBy, setOrderBy] = React.useState<keyof CountryType>('id')
   const [page, setPage] = useState<number>(0)
   const [rowsPerPage, setRowsPerPage] = useState<number>(10)
+
+  const handleRequestSort = (
+    event: React.MouseEvent<unknown>,
+    property: keyof CountryType
+  ) => {
+    const isAsc = orderBy === property && order === 'asc'
+    setOrder(isAsc ? 'desc' : 'asc')
+    setOrderBy(property)
+  }
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
@@ -32,50 +37,25 @@ export default function CountriesTable({ countries }: CountriesPropType) {
 
   return (
     <TableContainer>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Flag</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Languages</TableCell>
-            <TableCell>Population</TableCell>
-            <TableCell>Region</TableCell>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
+      <Table size="medium">
+        <colgroup>
+          <col width="10%" />
+          <col width="30%" />
+          <col width="20%" />
+          <col width="15%" />
+          <col width="15%" />
+          <col width="10%" />
+        </colgroup>
+        <TableHeader
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+        />
         <TableBody>
-          {countries
+          {stableSort<CountryType>(countries, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((country) => (
-              <TableRow key={`country-${country.id}`}>
-                <TableCell>
-                  <Avatar
-                    alt={`${country.name.common} flag`}
-                    src={country.flags.svg}
-                    variant="square"
-                  />
-                </TableCell>
-                <TableCell>
-                  <Link to={`/country/${country.id}`}>
-                    {country.name.common}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  <List>
-                    {country.languages &&
-                      Object.entries(country.languages).map((value) => (
-                        <ListItem key={value[0]}>
-                          <ListItemText primary={value[1]} />
-                        </ListItem>
-                      ))}
-                  </List>
-                </TableCell>
-                <TableCell>{country.population}</TableCell>
-                <TableCell>{country.region}</TableCell>
-                <TableCell align="right">
-                  <Button variant="contained">Add</Button>
-                </TableCell>
-              </TableRow>
+              <TableRowItem country={country} />
             ))}
         </TableBody>
       </Table>
