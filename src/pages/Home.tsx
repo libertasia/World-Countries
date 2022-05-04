@@ -15,13 +15,15 @@ import { getCountries } from '../redux/actions'
 export default function Home() {
   const dispatch = useDispatch()
 
-  const { countries, isLoading, error } = useSelector(
+  const { countries, isDataLoaded, isLoading, error } = useSelector(
     (state: AppState) => state.countriesData
   )
 
   useEffect(() => {
-    ;(dispatch as ThunkDispatch<CountriesState, void, Action>)(getCountries())
-  }, [])
+    if (!isDataLoaded) {
+      ;(dispatch as ThunkDispatch<CountriesState, void, Action>)(getCountries())
+    }
+  }, [dispatch, isDataLoaded])
 
   return (
     <Box

@@ -8,6 +8,7 @@ import {
 
 const initialState: CountriesState = {
   countries: [],
+  isDataLoaded: false,
   isLoading: false,
   error: '',
 }
@@ -27,6 +28,7 @@ export function countriesReducer(
       ...state,
       countries: action.payload,
       isLoading: false,
+      isDataLoaded: true,
     }
   case LOAD_COUNTRIES_FAILURE:
     return {

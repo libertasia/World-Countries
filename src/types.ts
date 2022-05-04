@@ -103,6 +103,7 @@ export type LoadCountriesFailureAction = {
 
 export type CountriesState = {
   countries: CountryType[]
+  isDataLoaded: boolean
   isLoading: boolean
   error: string
 }
