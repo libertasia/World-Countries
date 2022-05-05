@@ -6,11 +6,14 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import store from './redux/store'
+import CustomThemeProvider from './CustomThemeProvider'
 
 const WithProvider = () => (
   <Provider store={store}>
     <Router>
-      <App />
+      <CustomThemeProvider>
+        <App />
+      </CustomThemeProvider>
     </Router>
   </Provider>
 )

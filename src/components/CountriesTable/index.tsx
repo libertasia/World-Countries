@@ -55,7 +55,7 @@ export default function CountriesTable({ countries }: CountriesPropType) {
           {stableSort<CountryType>(countries, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((country) => (
-              <TableRowItem country={country} />
+              <TableRowItem key={country.id} country={country} />
             ))}
         </TableBody>
       </Table>
