@@ -25,12 +25,13 @@ export default function TableRowItem({ country }: TableRowItemPropType) {
       </TableCell>
       <TableCell>
         <List>
-          {country.languages &&
-            Object.entries(country.languages).map((value) => (
+          {country.languages
+            ? Object.entries(country.languages).map((value) => (
               <ListItem key={value[0]}>
                 <ListItemText primary={value[1]} />
               </ListItem>
-            ))}
+            ))
+            : 'DATA MISSING'}
         </List>
       </TableCell>
       <TableCell>{country.population}</TableCell>
