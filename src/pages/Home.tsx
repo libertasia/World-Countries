@@ -12,6 +12,7 @@ import CountriesTable from '../components/CountriesTable'
 import StickyFooter from '../components/StickyFooter'
 import { AppState, CountriesState } from '../types'
 import { getCountries } from '../redux/actions'
+import { getFilteredCountries } from '../helpers'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -20,11 +21,15 @@ export default function Home() {
     (state: AppState) => state.countriesData
   )
 
+  const { filterValue } = useSelector((state: AppState) => state.ui)
+
   useEffect(() => {
     if (!isDataLoaded) {
       ;(dispatch as ThunkDispatch<CountriesState, void, Action>)(getCountries())
     }
   }, [dispatch, isDataLoaded])
+
+  const filteredCountries = getFilteredCountries(countries, filterValue)
 
   return (
     <Box
@@ -52,7 +57,7 @@ export default function Home() {
           </Typography>
           {error && <p>{error}</p>}
           {isLoading && <p>Loading...</p>}
-          <CountriesTable countries={countries} />
+          <CountriesTable countries={filteredCountries} />
         </Container>
       </Box>
       <StickyFooter />

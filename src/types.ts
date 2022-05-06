@@ -2,6 +2,7 @@
 export const LOAD_COUNTRIES_REQUEST = 'LOAD_COUNTRIES_REQUEST'
 export const LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS'
 export const LOAD_COUNTRIES_FAILURE = 'LOAD_COUNTRIES_FAILURE'
+export const SET_FILTER_VALUE = 'SET_FILTER_VALUE'
 
 // Countries
 export type CountryType = {
@@ -30,6 +31,8 @@ export type CountriesActions =
   | LoadCountriesSuccessAction
   | LoadCountriesFailureAction
 
+export type UiActions = SetFilterValueAction
+
 export type LoadCountriesRequestAction = {
   type: typeof LOAD_COUNTRIES_REQUEST
 }
@@ -46,6 +49,11 @@ export type LoadCountriesFailureAction = {
   }
 }
 
+export type SetFilterValueAction = {
+  type: typeof SET_FILTER_VALUE
+  payload: string
+}
+
 // State
 export type CountriesState = {
   countries: CountryType[]
@@ -54,9 +62,13 @@ export type CountriesState = {
   error: string
 }
 
+export type UiState = {
+  filterValue: string
+}
+
 export type AppState = {
   countriesData: CountriesState
-  // ui: UiState,
+  ui: UiState
 }
 
 // Other Types

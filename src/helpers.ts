@@ -1,4 +1,4 @@
-import { OrderType } from './types'
+import { CountryType, OrderType } from './types'
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -36,4 +36,15 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
     return a[1] - b[1]
   })
   return stabilizedThis.map((el) => el[0])
+}
+
+export function getFilteredCountries(
+  countries: CountryType[],
+  filterValue: string
+) {
+  return countries.filter(
+    (country) =>
+      country.name.common.toLowerCase().startsWith(filterValue.toLowerCase()) ||
+      country.region.toLowerCase().startsWith(filterValue.toLowerCase())
+  )
 }

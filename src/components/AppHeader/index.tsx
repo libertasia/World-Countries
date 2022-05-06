@@ -12,6 +12,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 
 import SwitchThemeList from '../SwitchThemeList'
+import SearchField from '../SearchField'
 
 const drawerWidth: number = 240
 
@@ -64,7 +65,7 @@ const Drawer = styled(MuiDrawer, {
 }))
 
 export default function AppHeader() {
-  const [open, setOpen] = React.useState(true)
+  const [open, setOpen] = React.useState(false)
   const toggleDrawer = () => {
     setOpen(!open)
   }
@@ -94,11 +95,12 @@ export default function AppHeader() {
             variant="h6"
             color="inherit"
             noWrap
-            sx={{ flexGrow: 1 }}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
           >
             Countries
           </Typography>
-          <IconButton color="inherit">
+          <SearchField />
+          <IconButton color="inherit" sx={{ marginLeft: 'auto' }}>
             <Badge badgeContent={4} color="secondary">
               <FavoriteIcon />
             </Badge>
