@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar'
@@ -13,24 +13,49 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 
 import SwitchThemeList from '../SwitchThemeList'
 import SearchField from '../SearchField'
+import { CountriesPropType } from '../../types'
+import { ChevronRight } from '@mui/icons-material'
+import FavouriteCountriesList from '../FavouriteCountriesList'
 
 const drawerWidth: number = 240
 
 interface AppBarProps extends MuiAppBarProps {
-  open?: boolean
+  isThemesOpen?: boolean
+  isFavoritesOpen?: boolean
 }
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})<AppBarProps>(({ theme, open }) => ({
+  shouldForwardProp: (prop) =>
+    prop !== 'isThemesOpen' && prop !== 'isFavoritesOpen',
+})<AppBarProps>(({ theme, isThemesOpen, isFavoritesOpen }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
+  ...(isThemesOpen &&
+    !isFavoritesOpen && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+  ...(!isThemesOpen &&
+    isFavoritesOpen && {
+    marginRight: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+  ...(isThemesOpen &&
+    isFavoritesOpen && {
+    marginLeft: drawerWidth,
+    marginRight: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -64,15 +89,30 @@ const Drawer = styled(MuiDrawer, {
   },
 }))
 
-export default function AppHeader() {
-  const [open, setOpen] = React.useState(false)
+export default function AppHeader({ countries }: CountriesPropType) {
+  const [isThemeListOpen, setIsThemeListOpen] = useState<boolean>(false)
+
+  const [isFavouriteListOpen, setIsFavouriteListOpen] = useState<boolean>(false)
+
   const toggleDrawer = () => {
-    setOpen(!open)
+    setIsThemeListOpen(!isThemeListOpen)
   }
+
+  const toggleFavourite = () => {
+    setIsFavouriteListOpen(!isFavouriteListOpen)
+  }
+
+  const favouriteCountries = countries.filter(
+    (country) => country.isInFavourites
+  )
 
   return (
     <>
-      <AppBar position="absolute" open={open}>
+      <AppBar
+        position="absolute"
+        isThemesOpen={isThemeListOpen}
+        isFavoritesOpen={isFavouriteListOpen}
+      >
         <Toolbar
           sx={{
             pr: '24px', // keep right padding when drawer closed
@@ -81,11 +121,11 @@ export default function AppHeader() {
           <IconButton
             edge="start"
             color="inherit"
-            aria-label="open drawer"
+            aria-label="open switch theme list"
             onClick={toggleDrawer}
             sx={{
               marginRight: '36px',
-              ...(open && { display: 'none' }),
+              ...(isThemeListOpen && { display: 'none' }),
             }}
           >
             <MenuIcon />
@@ -100,14 +140,22 @@ export default function AppHeader() {
             Countries
           </Typography>
           <SearchField />
-          <IconButton color="inherit" sx={{ marginLeft: 'auto' }}>
-            <Badge badgeContent={4} color="secondary">
+          <IconButton
+            color="inherit"
+            aria-label="open favourite countries list"
+            onClick={toggleFavourite}
+            sx={{
+              marginLeft: 'auto',
+              ...(isFavouriteListOpen && { display: 'none' }),
+            }}
+          >
+            <Badge badgeContent={favouriteCountries.length} color="secondary">
               <FavoriteIcon />
             </Badge>
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={isThemeListOpen} anchor="left">
         <Toolbar
           sx={{
             display: 'flex',
@@ -123,6 +171,22 @@ export default function AppHeader() {
         <Divider />
         <SwitchThemeList />
       </Drawer>
+      <MuiDrawer variant="persistent" open={isFavouriteListOpen} anchor="right">
+        <Toolbar
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            px: [1],
+          }}
+        >
+          <IconButton onClick={toggleFavourite}>
+            <ChevronRight />
+          </IconButton>
+        </Toolbar>
+        <Divider />
+        <FavouriteCountriesList countries={favouriteCountries} />
+      </MuiDrawer>
     </>
   )
 }

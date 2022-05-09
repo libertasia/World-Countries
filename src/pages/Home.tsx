@@ -41,7 +41,7 @@ export default function Home() {
     >
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppHeader />
+        <AppHeader countries={countries} />
         <Container
           component="main"
           maxWidth="lg"
