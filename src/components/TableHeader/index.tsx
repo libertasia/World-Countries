@@ -101,6 +101,7 @@ export default function TableHeader({
             )}
           </TableCell>
         ))}
+        <TableCell align="right">Details</TableCell>
       </TableRow>
     </TableHead>
   )

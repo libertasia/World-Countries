@@ -3,6 +3,8 @@ export const LOAD_COUNTRIES_REQUEST = 'LOAD_COUNTRIES_REQUEST'
 export const LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS'
 export const LOAD_COUNTRIES_FAILURE = 'LOAD_COUNTRIES_FAILURE'
 export const SET_FILTER_VALUE = 'SET_FILTER_VALUE'
+export const ADD_TO_FAVOURITES = 'ADD_TO_FAVOURITES'
+export const REMOVE_FROM_FAVOURITES = 'REMOVE_FROM_FAVOURITES'
 
 // Countries
 export type CountryType = {
@@ -21,6 +23,10 @@ export type CountryType = {
   isInFavourites: boolean
 }
 
+export type CountryPropType = {
+  country: CountryType
+}
+
 export type CountriesPropType = {
   countries: CountryType[]
 }
@@ -30,6 +36,8 @@ export type CountriesActions =
   | LoadCountriesRequestAction
   | LoadCountriesSuccessAction
   | LoadCountriesFailureAction
+  | AddToFavouritesAction
+  | RemoveFromFavouritesAction
 
 export type UiActions = SetFilterValueAction
 
@@ -48,10 +56,25 @@ export type LoadCountriesFailureAction = {
     msg: string
   }
 }
+export type AddToFavouritesAction = {
+  type: typeof ADD_TO_FAVOURITES
+  payload: {
+    country: CountryType
+  }
+}
+
+export type RemoveFromFavouritesAction = {
+  type: typeof REMOVE_FROM_FAVOURITES
+  payload: {
+    country: CountryType
+  }
+}
 
 export type SetFilterValueAction = {
   type: typeof SET_FILTER_VALUE
-  payload: string
+  payload: {
+    filterValue: string
+  }
 }
 
 // State
@@ -81,8 +104,4 @@ export type TableHeaderPropType = {
   ) => void
   order: OrderType
   orderBy: string
-}
-
-export type TableRowItemPropType = {
-  country: CountryType
 }

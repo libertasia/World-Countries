@@ -1,16 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Button from '@mui/material/Button'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Avatar from '@mui/material/Avatar'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
-import Button from '@mui/material/Button'
 
-import { TableRowItemPropType } from '../../types'
+import FavouriteButton from '../FavouriteButton'
+import { CountryPropType } from '../../types'
 
-export default function TableRowItem({ country }: TableRowItemPropType) {
+export default function TableRowItem({ country }: CountryPropType) {
+  const hrefToCountryPage = `/country/${country.id}`
   return (
     <TableRow key={`country-${country.id}`}>
       <TableCell>
@@ -21,7 +23,7 @@ export default function TableRowItem({ country }: TableRowItemPropType) {
         />
       </TableCell>
       <TableCell>
-        <Link to={`/country/${country.id}`}>{country.name.common}</Link>
+        <Link to={hrefToCountryPage}>{country.name.common}</Link>
       </TableCell>
       <TableCell>
         <List>
@@ -37,7 +39,12 @@ export default function TableRowItem({ country }: TableRowItemPropType) {
       <TableCell>{country.population}</TableCell>
       <TableCell>{country.region}</TableCell>
       <TableCell align="right">
-        <Button variant="contained">Add</Button>
+        <FavouriteButton country={country} />
+      </TableCell>
+      <TableCell align="right">
+        <Button variant="contained" component={Link} to={hrefToCountryPage}>
+          More
+        </Button>
       </TableCell>
     </TableRow>
   )

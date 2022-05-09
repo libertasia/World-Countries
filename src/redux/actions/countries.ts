@@ -6,11 +6,16 @@ import {
   LOAD_COUNTRIES_FAILURE,
   LOAD_COUNTRIES_REQUEST,
   LOAD_COUNTRIES_SUCCESS,
+  ADD_TO_FAVOURITES,
+  REMOVE_FROM_FAVOURITES,
   CountriesPropType,
   LoadCountriesSuccessAction,
   LoadCountriesRequestAction,
   LoadCountriesFailureAction,
+  AddToFavouritesAction,
+  RemoveFromFavouritesAction,
   CountriesState,
+  CountryType,
 } from '../../types'
 
 export function loadCountriesRequest(): LoadCountriesRequestAction {
@@ -33,6 +38,26 @@ export function loadCountriesFailure(msg: string): LoadCountriesFailureAction {
     type: LOAD_COUNTRIES_FAILURE,
     payload: {
       msg,
+    },
+  }
+}
+
+export function addToFavourites(country: CountryType): AddToFavouritesAction {
+  return {
+    type: ADD_TO_FAVOURITES,
+    payload: {
+      country,
+    },
+  }
+}
+
+export function removeFromFavourites(
+  country: CountryType
+): RemoveFromFavouritesAction {
+  return {
+    type: REMOVE_FROM_FAVOURITES,
+    payload: {
+      country,
     },
   }
 }
