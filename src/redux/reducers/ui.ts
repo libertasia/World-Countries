@@ -9,7 +9,7 @@ export function uiReducer(state = initialState, action: UiActions) {
   case SET_FILTER_VALUE:
     return {
       ...state,
-      filterValue: action.payload,
+      filterValue: action.payload.filterValue,
     }
   default:
     return state
