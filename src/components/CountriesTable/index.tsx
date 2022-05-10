@@ -36,7 +36,12 @@ export default function CountriesTable({ countries }: CountriesPropType) {
   }
 
   return (
-    <TableContainer>
+    <TableContainer
+      sx={{
+        marginTop: '50px',
+        marginBottom: '40px',
+      }}
+    >
       <Table size="medium">
         <colgroup>
           <col width="10%" />

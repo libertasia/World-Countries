@@ -1,27 +1,43 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { Action } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import { visuallyHidden } from '@mui/utils'
 
+import CountryCard from '../components/CountryCard'
 import StickyFooter from '../components/StickyFooter'
-import { AppState } from '../types'
-import { resetFilterValue } from '../redux/actions'
+import { AppState, CountriesState } from '../types'
+import { getCountryByName, resetFilterValue } from '../redux/actions'
 
 export default function Country() {
+  const dispatch = useDispatch()
+
   const { id } = useParams<{ id: string }>()
 
-  const country = useSelector((state: AppState) =>
+  const { isCountryDataLoaded, isLoading, error, country } = useSelector(
+    (state: AppState) => state.countriesData
+  )
+
+  const countryData = useSelector((state: AppState) =>
     state.countriesData.countries.find((el) => el.id === id)
   )
 
-  const dispatch = useDispatch()
-
   useEffect(() => {
     dispatch(resetFilterValue())
-  })
+
+    if (!countryData && !isCountryDataLoaded) {
+      ;(dispatch as ThunkDispatch<CountriesState, void, Action>)(
+        getCountryByName(id?.toLowerCase())
+      )
+    }
+  }, [dispatch, isCountryDataLoaded, countryData, id])
+
+  const countryInfo = !countryData ? country[0] : countryData
 
   return (
     <Box
@@ -33,9 +49,17 @@ export default function Country() {
     >
       <CssBaseline />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
-        <Typography variant="h2" component="h1" gutterBottom>
-          {country?.name.common}
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+          sx={visuallyHidden}
+        >
+          Country page
         </Typography>
+        {error && <p>{error}</p>}
+        {isLoading && <p>Loading...</p>}
+        {countryInfo && <CountryCard country={countryInfo} />}
       </Container>
       <StickyFooter />
     </Box>

@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
+import { visuallyHidden } from '@mui/utils'
 
 import AppHeader from '../components/AppHeader'
 import CountriesTable from '../components/CountriesTable'
@@ -52,12 +53,19 @@ export default function Home() {
             overflow: 'auto',
           }}
         >
-          <Typography variant="h2" component="h1" gutterBottom>
+          <Typography
+            variant="h2"
+            component="h1"
+            gutterBottom
+            sx={visuallyHidden}
+          >
             Home page
           </Typography>
           {error && <p>{error}</p>}
           {isLoading && <p>Loading...</p>}
-          <CountriesTable countries={filteredCountries} />
+          {filteredCountries && filteredCountries.length > 0 && (
+            <CountriesTable countries={filteredCountries} />
+          )}
         </Container>
       </Box>
       <StickyFooter />

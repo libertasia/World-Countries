@@ -5,12 +5,17 @@ import {
   LOAD_COUNTRIES_FAILURE,
   LOAD_COUNTRIES_REQUEST,
   LOAD_COUNTRIES_SUCCESS,
+  LOAD_COUNTRY_BY_NAME_FAILURE,
+  LOAD_COUNTRY_BY_NAME_REQUEST,
+  LOAD_COUNTRY_BY_NAME_SUCCESS,
   REMOVE_FROM_FAVOURITES,
 } from '../../types'
 
 const initialState: CountriesState = {
   countries: [],
+  country: [],
   isDataLoaded: false,
+  isCountryDataLoaded: false,
   isLoading: false,
   error: '',
 }
@@ -33,6 +38,24 @@ export function countriesReducer(
       isDataLoaded: true,
     }
   case LOAD_COUNTRIES_FAILURE:
+    return {
+      ...state,
+      isLoading: false,
+      error: action.payload.msg,
+    }
+  case LOAD_COUNTRY_BY_NAME_REQUEST:
+    return {
+      ...state,
+      isLoading: true,
+    }
+  case LOAD_COUNTRY_BY_NAME_SUCCESS:
+    return {
+      ...state,
+      country: action.payload,
+      isLoading: false,
+      isCountryDataLoaded: true,
+    }
+  case LOAD_COUNTRY_BY_NAME_FAILURE:
     return {
       ...state,
       isLoading: false,
