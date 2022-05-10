@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { styled, alpha } from '@mui/material/styles'
 import InputBase from '@mui/material/InputBase'
 import SearchIcon from '@mui/icons-material/Search'
-import { SetFilterValue } from '../../redux/actions'
+import { setFilterValue } from '../../redux/actions'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -51,7 +51,7 @@ export default function SearchField() {
   function handleInputChange(
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) {
-    dispatch(SetFilterValue(event.target.value))
+    dispatch(setFilterValue(event.target.value))
   }
 
   return (

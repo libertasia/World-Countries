@@ -3,6 +3,7 @@ export const LOAD_COUNTRIES_REQUEST = 'LOAD_COUNTRIES_REQUEST'
 export const LOAD_COUNTRIES_SUCCESS = 'LOAD_COUNTRIES_SUCCESS'
 export const LOAD_COUNTRIES_FAILURE = 'LOAD_COUNTRIES_FAILURE'
 export const SET_FILTER_VALUE = 'SET_FILTER_VALUE'
+export const RESET_FILTER_VALUE = 'RESET_FILTER_VALUE'
 export const ADD_TO_FAVOURITES = 'ADD_TO_FAVOURITES'
 export const REMOVE_FROM_FAVOURITES = 'REMOVE_FROM_FAVOURITES'
 
@@ -39,7 +40,7 @@ export type CountriesActions =
   | AddToFavouritesAction
   | RemoveFromFavouritesAction
 
-export type UiActions = SetFilterValueAction
+export type UiActions = SetFilterValueAction | ResetFilterValueAction
 
 export type LoadCountriesRequestAction = {
   type: typeof LOAD_COUNTRIES_REQUEST
@@ -75,6 +76,10 @@ export type SetFilterValueAction = {
   payload: {
     filterValue: string
   }
+}
+
+export type ResetFilterValueAction = {
+  type: typeof RESET_FILTER_VALUE
 }
 
 // State
