@@ -15,6 +15,7 @@ export type CountryType = {
   id: string
   name: {
     common: string
+    official: string
   }
   flags: {
     svg: string
@@ -22,8 +23,13 @@ export type CountryType = {
   languages: {
     [key: string]: string
   }
+  capital: string
+  unMember: boolean
   population: number
   region: string
+  borders: {
+    [key: string]: string
+  }
   isInFavourites: boolean
 }
 
