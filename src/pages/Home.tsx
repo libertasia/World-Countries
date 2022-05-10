@@ -9,6 +9,7 @@ import Container from '@mui/material/Container'
 import { visuallyHidden } from '@mui/utils'
 
 import AppHeader from '../components/AppHeader'
+import CircularLoading from '../components/CircularLoading'
 import CountriesTable from '../components/CountriesTable'
 import StickyFooter from '../components/StickyFooter'
 import { AppState, CountriesState } from '../types'
@@ -62,7 +63,7 @@ export default function Home() {
             Home page
           </Typography>
           {error && <p>{error}</p>}
-          {isLoading && <p>Loading...</p>}
+          {isLoading && <CircularLoading />}
           {filteredCountries && filteredCountries.length > 0 && (
             <CountriesTable countries={filteredCountries} />
           )}

@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { visuallyHidden } from '@mui/utils'
 
+import CircularLoading from '../components/CircularLoading'
 import CountryCard from '../components/CountryCard'
 import StickyFooter from '../components/StickyFooter'
 import { AppState, CountriesState } from '../types'
@@ -58,7 +59,7 @@ export default function Country() {
           Country page
         </Typography>
         {error && <p>{error}</p>}
-        {isLoading && <p>Loading...</p>}
+        {isLoading && <CircularLoading />}
         {countryInfo && <CountryCard country={countryInfo} />}
       </Container>
       <StickyFooter />
