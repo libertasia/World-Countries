@@ -14,12 +14,14 @@ export default function CountryCard({ country }: CountryPropType) {
   return (
     <Card
       sx={{
+        position: 'relative',
+        zIndex: 1,
         display: 'flex',
         flexDirection: 'column',
         width: '288px',
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundColor: grey[100],
+        backgroundColor: grey[200],
       }}
     >
       <CardMedia

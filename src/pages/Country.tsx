@@ -14,6 +14,7 @@ import CountryCard from '../components/CountryCard'
 import StickyFooter from '../components/StickyFooter'
 import { AppState, CountriesState } from '../types'
 import { getCountryByName, resetFilterValue } from '../redux/actions'
+import BackgroundImage from '../assets/images/undraw_traveling_re_weve.svg'
 
 export default function Country() {
   const dispatch = useDispatch()
@@ -49,7 +50,27 @@ export default function Country() {
       }}
     >
       <CssBaseline />
-      <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="lg">
+      <Container
+        component="main"
+        sx={{
+          flexGrow: 1,
+          mt: 8,
+          position: 'relative',
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            backgroundImage: `url(${BackgroundImage})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
+            opacity: 0.3,
+          },
+        }}
+        maxWidth="lg"
+      >
         <Typography
           variant="h2"
           component="h1"
