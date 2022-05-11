@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
@@ -54,6 +56,21 @@ export default function CountryCard({ country }: CountryPropType) {
               .join(', ')}
         </Typography>
       </CardContent>
+      <Divider variant="middle" />
+      <Button
+        sx={{
+          display: 'flex',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: '20px',
+          marginBottom: '20px',
+        }}
+        variant="contained"
+        component={Link}
+        to="/"
+      >
+        Return
+      </Button>
     </Card>
   )
 }
