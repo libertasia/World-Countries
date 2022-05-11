@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Link as MuiLink } from '@mui/material'
 import Button from '@mui/material/Button'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
@@ -13,6 +14,7 @@ import { Typography } from '@mui/material'
 
 export default function TableRowItem({ country }: CountryPropType) {
   const hrefToCountryPage = `/country/${country.id}`
+
   return (
     <TableRow key={`country-${country.id}`}>
       <TableCell>
@@ -23,9 +25,15 @@ export default function TableRowItem({ country }: CountryPropType) {
         />
       </TableCell>
       <TableCell>
-        <Typography component={Link} to={hrefToCountryPage} variant="body2">
+        <MuiLink
+          component={Link}
+          to={hrefToCountryPage}
+          variant="body2"
+          color="inherit"
+          underline="hover"
+        >
           {country.name.common}
-        </Typography>
+        </MuiLink>
       </TableCell>
       <TableCell>
         <List>
