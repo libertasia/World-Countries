@@ -1,103 +1,63 @@
-# Fast Track React app template with TypeScript & Redux 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Frontend project "World Countries"
 
-## Installation
-You should use either `npm` or `yarn` but not both. It's recommeded to use `yarn`
+This project has been completed as part of Integrify FullStack program.
 
-This template already comes with all needed packages. In case you want to install manually, check the dependencies in `package.json` file. To install, run:
+Latest version is deployed at https://world-countries-theta.vercel.app/.
+
+## Project description
+
+### Home page
+- The user is presented with a list of countries. For each country we have its flag, common name, languages, population and region. There are also two additional buttons, one for adding a country to the favourites list and one to get more detailed information about the country. 
+- The user can sort countries data either by name or by population.
+- If the user is interested in a particular country, searching it directly in the list may take a lot of work, so there is an option to filter. The filter takes country name and region into account and is case-insensitive.
+- If the user doesn’t like the colour of the page, there is an option to switch themes. On the left side of the App is a list of available themes, and user can change it by clicking one of the buttons. Theme switch is done using Context API, and it is also saved in local storage, so the selected theme persists even if the user reload the page.
+- If the user wants to save some country to quickly go back to it later, they can add it to favourites list, by clicking the heart button. The heart button will then change to the bin icon and in the top right corner they’ll see the total number of countries in favourite list. If the user clicks on that icon, they’ll see the list itself. And if they decide that they don’t want a country in favourites list anymore, they can simply remove it by clicking on the bin icon.
+### Country page navigation
+- If the user wants to get more information about a particular country, they can click on its name in the country list, or click the “MORE” button, or click on the country name in favourites list.
+
+## Running the project
+
+#### Option 1
+
+Prerequsites:
+- Node.js v16.15.0
+
+Navigate to the project folder and install dependencies by running:
 ```
-yarn install
+$ npm install
 ```
 
-## Features
+Start the app by running:
+```
+$ npm start
+```
+
+#### Option 2 (Docker)
+
+Prerequisites:
+- Docker
+
+Navigate to the project folder and build the image, e.g.:
+```
+$ docker build -t world-countries .
+```
+
+Run the image, e.g.:
+```
+$ docker run -it --rm -p 3000:3000 world-countries
+```
+
+Navigate to http://localhost:3000/ in your browser.
+
+## Used technologies
+
+* TypeScript
+* Material UI
+* React.js, React.js hooks
+* React-router
 * Redux
 * Redux-thunk
-* Redux-saga
-* React-router
+* Axios
 * Prettier
 * ESLint
 * Husky & lint-staged
-
-The template comes with ready-made code for a very simple working demo (products list). To play around with it, run:
-```
-yarn start
-```
-
-## Modify or add new features
-Follow the file/folder structure as explained below to make necessary changes. For Redux, most of the time, you can copy existing files, modify something in there to make a new feature.
-
-## Folder structure
-* `src/components`: React components. For each component, it's better to put it in a separate folder. For example:
-  ```
-  src/components/Button/index.tsx
-  src/components/Button/Button.scss
-  src/components/Button/Button.stories.tsx
-  src/components/Button/Button.test.tsx
-  ```
-
-* `src/hooks`: Custom hooks. For example:
-  ```
-  src/hooks/useCountries.ts
-  src/hooks/useUser.ts
-  ```
-
-* `src/redux`: Everything (such as actions, reducers, sagas etc) related to Redux
-  * `src/redux/actions`: For Redux actions
-  * `src/redux/reducers`: For Redux reducers
-  * `src/redux/sagas`: For Redux sagas
-  * `src/redux/store.ts`: The Redux store
-
-  If there are multiple un-related features, split action/reducer/saga into different files. For example:
-  ```
-  src/redux/actions/product.ts
-  src/redux/actions/order.ts
-  src/redux/actions/ui.ts
-  ```
-  ```
-  src/redux/reducers/product.ts
-  src/redux/reducers/order.ts
-  src/redux/actions/ui.ts
-  ```
-  ```
-  src/redux/sagas/product.ts
-  src/redux/sagas/order.ts
-  src/redux/sagas/ui.ts
-  ```
-
-* `src/pages`: Pages (or views) when using [React router](https://reacttraining.com/react-router/web/guides/quick-start). For example:
-  ```
-  src/pages/Home.tsx
-  src/pages/Product.tsx
-  ```
-  If there are more files than just page's `*.tsx`, a folder structure can be used. For example:
-  ```
-  src/pages/Home/index.tsx
-  src/pages/Home/Home.scss
-  ```
-
-* `src/types.ts`: TypeScript's type definitions. For small apps, you can put definitions of all types, interfaces etc and even Redux's actions, action creators, states here.
-
-* `src/Routes.tsx`: Defines all the React router routes to different pages.
-
-This template is suitable for rather small apps. For bigger apps, a better & more organized way is to split the folder structure into features, something like:
-  ```
-  sr/feature1
-  --components
-  --redux
-  ----action.ts
-  ----reducer.ts
-  ----saga.ts
-
-  src/feature2
-  --components
-  --redux
-  ----action.ts
-  ----reducer.ts
-  ----saga.ts
-
-  src/redux
-  --action.ts
-  --reducer.ts
-  --saga.ts
-  --store.ts
-  ```
